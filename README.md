@@ -4,7 +4,7 @@
 
 [**techconf.ca**](https://techconf.ca/)
 
-A community-curated list of Hungarian tech conferences.
+A community-curated list of Canadian tech conferences.
 Inspired by:
 
 * 🤖 [AndroidStudyGroup/conferences](https://github.com/AndroidStudyGroup/conferences)
