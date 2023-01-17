@@ -1,0 +1,68 @@
+# Workflow for building and deploying a Jekyll site to S3
+name: Deploy Jekyll site to S3
+
+on:
+  # Runs on pushes & pulls targeting the default branch
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Allow one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  # Build & Deploy job
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: bom-check
+        uses: arma-actions/bom-check@v1.0
+        with:
+          path: _conferences
+      - name: Validate conference data file names
+        run: ls -1 _conferences/ | grep -v '\.md$' && echo "Found above file names not ending in '.md'. Please correct." && exit 1 || true
+      - name: Prepare for conference data file validation
+        run: |
+          mkdir _tmp
+          # Copy conference data files and rename to .yml because pykwalify is picky
+          for file in _conferences/*.md; do
+            name=${file#"_conferences/"}
+            name=${name%".md"}
+            cp -- "$file" "_tmp/${name}.yml"
+          done
+          # Strip everything but the YAML front matter block
+          sed -ni '/---/{:a;n;/---/b;p;ba}' _tmp/*.yml
+      - name: Validate conference data files
+        uses: cketti/action-pykwalify@v0.3-temp-fix
+        with:
+          files: _tmp/*.yml
+          schema: conference_schema.yml
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@ee2113536afb7f793eed4ce60e8d3b26db912da4 # v1.127.0
+        with:
+          ruby-version: '3.0' # Not needed with a .ruby-version file
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+          cache-version: 0 # Increment this number if you need to re-download cached gems
+      - name: Build with Jekyll
+        # Outputs to the './_site' directory by default
+        run: bundle exec jekyll build
+        env:
+          JEKYLL_ENV: production
+      - name: Deploy to S3
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --follow-symlinks --delete
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: 'ca-central-1'   # optional: defaults to us-east-1
+          SOURCE_DIR: '$GITHUB_WORKSPACE/_site'      # optional: defaults to entire repository
