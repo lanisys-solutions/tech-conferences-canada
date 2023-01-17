@@ -1,0 +1,21 @@
+---
+layout: none
+uid_prefix: https://github.com/lanisys-solutions/tech-conferences-canada/tree/main/
+---
+{% assign today = site.time | date: "%s" %}
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:https://techconf.ca/
+METHOD:PUBLISH
+{% for conference in site.conferences %}{% assign date_end = conference.date_end | date: "%s" %}{% if today < date_end %}BEGIN:VEVENT
+UID:{{ page.uid_prefix }}{{ conference.relative_path }}
+URL:{{ conference.website }}
+DESCRIPTION:{{ conference.website }}{% if conference.location %}
+LOCATION:{{ conference.location }}{% endif %}
+SUMMARY:{{ conference.name }}{% if conference.location %} ({{ conference.location }}){% endif %}
+CLASS:PUBLIC
+DTSTART;VALUE=DATE:{{ conference.date_start | date: "%Y%m%d" }}
+DTEND;VALUE=DATE:{{ conference.date_end | date: "%s" | plus: 86400 | date: "%Y%m%d" }}
+DTSTAMP:{{ site.time | date: "%Y%m%dT%H%M%S" }}Z
+END:VEVENT
+{% endif %}{% endfor %}END:VCALENDAR
