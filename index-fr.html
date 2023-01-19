@@ -39,7 +39,7 @@ var today = dateTimestamp();
         document.write('<span class="label label-info">{{ conference.lang }}</span>');
       {% endif %}
       if (today >= dateTimestamp('{{ conference.date_start | date: "%Y-%m-%d" }}') && today <= dateTimestamp('{{ conference.date_end | date: "%Y-%m-%d" }}')) {
-        document.write('<span class="label label-danger">Most zajlik</span>');
+        document.write('<span class="label label-danger">Cela arrive maintenant</span>');
       }
       if (today > dateTimestamp('{{ conference.date_end | date: "%Y-%m-%d" }}')) {
         document.getElementById('{{ forloop.index }}').style.color="gray";
