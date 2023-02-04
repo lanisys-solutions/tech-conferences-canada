@@ -11,7 +11,7 @@ title: Past
   {% if today >= date_end %}
   <li>
     {{ conference.date_start | date: "%Y-%m-%d" }}&nbsp;
-    <a class="post-link" href="{{ conference.website }}" target="_blank">{{ conference.name }}</a>
+    {{ conference.name }}
     {% if conference.location %}
     &nbsp;<small>{{ conference.location }}</small>
     {% endif %}
