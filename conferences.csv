@@ -1,0 +1,6 @@
+---
+layout: none
+uid_prefix: https://github.com/lanisys-solutions/tech-conferences-canada/tree/main/
+---
+{% assign today = site.time | date: "%s" %}"Name","Website","Location","Start date","End date","Language","Online","Status"{% for conference in site.conferences %}{% assign date_end = conference.date_end | date: "%s" %}{% if today <= date_end %}
+"{{ conference.name }}","{{ conference.website }}","{{ conference.location }}","{{ conference.date_start | date: "%Y-%m-%d" }}","{{ conference.date_end | date: "%s" | plus: 86400 | date: "%Y-%m-%d" }}","{{ conference.lang }}","{% if conference.online %}{{ conference.online }}{% endif %}","{% if conference.status %}{{ conference.status }}"{% endif %}"{% endif %}{% endfor %}
