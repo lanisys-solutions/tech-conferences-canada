@@ -1,6 +1,6 @@
 ---
 name: "TECHSPO Toronto"
-website: https://events.linuxfoundation.org/linux-security-summit-north-america/
+website: https://techspotoronto.ca/
 location: Toronto, ON, Canada
 lang: English
 
