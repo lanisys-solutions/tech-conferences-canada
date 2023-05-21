@@ -6,5 +6,5 @@ online: true
 lang: English
 
 date_start: 2023-05-16
-date_end:   2023-06-18
+date_end:   2023-05-18
 ---
