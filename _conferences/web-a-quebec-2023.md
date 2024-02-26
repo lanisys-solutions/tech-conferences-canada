@@ -1,5 +1,5 @@
 ---
-name: "Web à Quebec 2023"
+name: "Web à Quebec"
 website: https://webaquebec.org/
 location: Québec, QC, Canada
 online: false
