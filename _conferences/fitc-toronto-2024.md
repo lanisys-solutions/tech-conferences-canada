@@ -1,7 +1,7 @@
 ---
 name: "FITC Toronto"
 website: https://fitc.ca/event/to24
-location: Toronto, ON, Canada & Virtual
+location: Toronto, ON, Canada
 online: true
 lang: English
 
