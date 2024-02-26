@@ -1,6 +1,6 @@
 ---
 name: "Canadian Women in Cybersecurity"
-website: https://www.siberx.org/event/canadian-women-in-cybersecurity-2024
+website: https://www.siberx.org/cwc
 location: Toronto, ON, Canada
 online: true
 lang: English
