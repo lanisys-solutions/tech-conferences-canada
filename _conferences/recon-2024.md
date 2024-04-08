@@ -10,5 +10,5 @@ date_end:   2024-06-30
 cfp:
  start: 2024-01-16
  end:   2024-04-26
- site:  https://cfp.recon.cx/2024/cfp
+ site:  https://cfp.recon.cx/recon2024
 ---
